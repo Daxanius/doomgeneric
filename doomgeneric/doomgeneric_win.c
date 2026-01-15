@@ -1,3 +1,5 @@
+#define WIN32_LEAN_AND_MEAN
+
 #include "doomkeys.h"
 
 #include "doomgeneric.h"
@@ -10,12 +12,25 @@ static BITMAPINFO s_Bmi = { sizeof(BITMAPINFOHEADER), DOOMGENERIC_RESX, -DOOMGEN
 static HWND s_Hwnd = 0;
 static HDC s_Hdc = 0;
 
-
 #define KEYQUEUE_SIZE 16
 
 static unsigned short s_KeyQueue[KEYQUEUE_SIZE];
 static unsigned int s_KeyQueueWriteIndex = 0;
 static unsigned int s_KeyQueueReadIndex = 0;
+
+#ifdef CMAP256
+#include "i_video.h"
+
+static uint32_t* s_Blit32 = NULL;
+
+static inline uint32_t pack_color(struct color c)
+{
+    return ((uint32_t)c.a << 24) |
+           ((uint32_t)c.r << 16) |
+           ((uint32_t)c.g << 8)  |
+           ((uint32_t)c.b);
+}
+#endif
 
 static unsigned char convertToDoomKey(unsigned char key)
 {
@@ -138,6 +153,14 @@ void DG_Init()
 		exit(-1);
 	}
 
+#ifdef CMAP256
+	s_Blit32 = (uint32_t*)malloc(DOOMGENERIC_RESX * DOOMGENERIC_RESY * sizeof(uint32_t));
+	if (!s_Blit32) {
+		printf("Buffer Creation Failed!");
+		exit(-1);
+	}
+#endif
+
 	memset(s_KeyQueue, 0, KEYQUEUE_SIZE * sizeof(unsigned short));
 }
 
@@ -152,7 +175,23 @@ void DG_DrawFrame()
 		DispatchMessageA(&msg);
 	}
 
+#ifdef CMAP256
+	const pixel_t* src = (const pixel_t*)DG_ScreenBuffer;
+    uint32_t* dst = s_Blit32;
+    size_t n = DOOMGENERIC_RESX * DOOMGENERIC_RESY;
+    for (size_t i = 0; i < n; i++) {
+        dst[i] = pack_color(colors[src[i]]);
+    }
+
+		StretchDIBits(
+        s_Hdc,
+        0, 0, DOOMGENERIC_RESX, DOOMGENERIC_RESY,
+        0, 0, DOOMGENERIC_RESX, DOOMGENERIC_RESY,
+        dst, &s_Bmi, 0, SRCCOPY
+    );
+#else
 	StretchDIBits(s_Hdc, 0, 0, DOOMGENERIC_RESX, DOOMGENERIC_RESY, 0, 0, DOOMGENERIC_RESX, DOOMGENERIC_RESY, DG_ScreenBuffer, &s_Bmi, 0, SRCCOPY);
+#endif
 
 	SwapBuffers(s_Hdc);
 }
