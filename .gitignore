@@ -9,5 +9,7 @@
 Debug/
 Release/
 Build/
+x64/
+
 doomgeneric
 doomgeneric.map
