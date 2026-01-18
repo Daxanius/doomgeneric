@@ -227,6 +227,10 @@ int DG_GetKey(int* pressed, unsigned char* doomKey)
 	}
 }
 
+short DG_GetMouseDelta() {
+	return 0;
+}
+
 void DG_SetWindowTitle(const char * title)
 {
 	if (s_Hwnd)
