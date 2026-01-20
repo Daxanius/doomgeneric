@@ -134,8 +134,8 @@ void DG_Init()
 
 	RECT rect;
 	rect.left = rect.top = 0;
-	rect.right = DOOMGENERIC_RESX;
-	rect.bottom = DOOMGENERIC_RESY;
+	rect.right = DOOMGENERIC_RESX * 2;
+	rect.bottom = DOOMGENERIC_RESY * 2;
 	AdjustWindowRect(&rect, WS_OVERLAPPEDWINDOW, FALSE);
 
 	HWND hwnd = CreateWindowExA(0, windowClassName, windowTitle, WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT, rect.right - rect.left, rect.bottom - rect.top, 0, 0, 0, 0);
@@ -185,12 +185,12 @@ void DG_DrawFrame()
 
 		StretchDIBits(
         s_Hdc,
-        0, 0, DOOMGENERIC_RESX, DOOMGENERIC_RESY,
-        0, 0, DOOMGENERIC_RESX, DOOMGENERIC_RESY,
+        0, 0, DOOMGENERIC_RESX * 2, DOOMGENERIC_RESY,
+        0, 0, DOOMGENERIC_RESX * 2, DOOMGENERIC_RESY,
         dst, &s_Bmi, 0, SRCCOPY
     );
 #else
-	StretchDIBits(s_Hdc, 0, 0, DOOMGENERIC_RESX, DOOMGENERIC_RESY, 0, 0, DOOMGENERIC_RESX, DOOMGENERIC_RESY, DG_ScreenBuffer, &s_Bmi, 0, SRCCOPY);
+	StretchDIBits(s_Hdc, 0, 0, DOOMGENERIC_RESX * 2, DOOMGENERIC_RESY * 2, 0, 0, DOOMGENERIC_RESX, DOOMGENERIC_RESY, DG_ScreenBuffer, &s_Bmi, 0, SRCCOPY);
 #endif
 
 	SwapBuffers(s_Hdc);

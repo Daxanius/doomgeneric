@@ -64,9 +64,7 @@
 #include "wi_stuff.h"
 #include "st_stuff.h"
 #include "am_map.h"
-#include "net_client.h"
-#include "net_dedicated.h"
-#include "net_query.h"
+#include "dg_client.h"
 
 #include "p_setup.h"
 #include "r_local.h"
@@ -353,9 +351,9 @@ void D_BindVariables(void)
     key_multi_msgplayer[2] = HUSTR_KEYBROWN;
     key_multi_msgplayer[3] = HUSTR_KEYRED;
 
-#ifdef FEATURE_MULTIPLAYER
-    NET_BindVariables();
-#endif
+//#ifdef FEATURE_MULTIPLAYER
+//    NET_BindVariables();
+//#endif
 
     M_BindVariable("mouse_sensitivity",      &mouseSensitivity);
     M_BindVariable("sfx_volume",             &sfxVolume);
@@ -1186,13 +1184,13 @@ void D_DoomMain (void)
     // in the game itself.
     //
 
-    if (M_CheckParm("-dedicated") > 0)
-    {
-        printf("Dedicated server mode.\n");
-        NET_DedicatedServer();
+    //if (M_CheckParm("-dedicated") > 0)
+    //{
+    //    printf("Dedicated server mode.\n");
+    //    NET_DedicatedServer();
 
-        // Never returns
-    }
+    //    // Never returns
+    //}
 
     //!
     // @category net
@@ -1201,11 +1199,11 @@ void D_DoomMain (void)
     // servers.
     //
 
-    if (M_CheckParm("-search"))
-    {
-        NET_MasterQuery();
-        exit(0);
-    }
+    //if (M_CheckParm("-search"))
+    //{
+    //    NET_MasterQuery();
+    //    exit(0);
+    //}
 
     //!
     // @arg <address>
@@ -1215,13 +1213,13 @@ void D_DoomMain (void)
     // address.
     //
 
-    p = M_CheckParmWithArgs("-query", 1);
+    //p = M_CheckParmWithArgs("-query", 1);
 
-    if (p)
-    {
-        NET_QueryAddress(myargv[p+1]);
-        exit(0);
-    }
+    //if (p)
+    //{
+    //    NET_QueryAddress(myargv[p+1]);
+    //    exit(0);
+    //}
 
     //!
     // @category net
@@ -1229,11 +1227,11 @@ void D_DoomMain (void)
     // Search the local LAN for running servers.
     //
 
-    if (M_CheckParm("-localsearch"))
-    {
-        NET_LANQuery();
-        exit(0);
-    }
+    //if (M_CheckParm("-localsearch"))
+    //{
+    //    NET_LANQuery();
+    //    exit(0);
+    //}
 
 #endif
 
@@ -1613,11 +1611,6 @@ void D_DoomMain (void)
     I_InitJoystick();
     I_InitSound(true);
     I_InitMusic();
-
-#ifdef FEATURE_MULTIPLAYER
-    printf ("NET_Init: Init network subsystem.\n");
-    NET_Init ();
-#endif
 
     // Initial netgame startup. Connect to server etc.
     D_ConnectNetGame();

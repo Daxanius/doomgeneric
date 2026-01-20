@@ -22,6 +22,6 @@ void doomgeneric_Create(int argc, char **argv)
 
 	DG_Init();
 
-	D_DoomMain ();
+	D_DoomMain();
 }
 

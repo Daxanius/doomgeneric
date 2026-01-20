@@ -68,6 +68,12 @@ void D_StartGameLoop(void);
 
 boolean D_InitNetGame(net_connect_data_t *connect_data);
 
+//
+// Invoked by the network engine when a complete set of ticcmds is
+// available.
+//
+void D_ReceiveTic(ticcmd_t* ticcmds, boolean *players_mask);
+
 // Start game with specified settings. The structure will be updated
 // with the actual settings for the game.
 

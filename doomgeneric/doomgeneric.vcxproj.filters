@@ -264,6 +264,9 @@
     <ClCompile Include="i_video.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="dg_client.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="am_map.h">
@@ -303,12 +306,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="d_ticcmd.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="deh_main.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="deh_misc.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="deh_str.h">
@@ -416,34 +413,10 @@
     <ClInclude Include="memio.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="net_client.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="net_dedicated.h">
+    <ClInclude Include="dg_client.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="net_defs.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="net_gui.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="net_io.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="net_loop.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="net_packet.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="net_query.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="net_sdl.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="net_server.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="p_inter.h">
@@ -552,6 +525,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="doomgeneric.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="deh_misc.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="deh_main.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

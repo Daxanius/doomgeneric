@@ -79,8 +79,6 @@ void	G_ReadDemoTiccmd (ticcmd_t* cmd);
 void	G_WriteDemoTiccmd (ticcmd_t* cmd); 
 void	G_PlayerReborn (int player); 
  
-void	G_DoReborn (int playernum); 
- 
 void	G_DoLoadLevel (void); 
 void	G_DoNewGame (void); 
 void	G_DoPlayDemo (void); 
@@ -331,8 +329,7 @@ void G_BuildTiccmd (ticcmd_t* cmd, int maketic)
 
     memset(cmd, 0, sizeof(ticcmd_t));
 
-    cmd->consistancy = 
-	consistancy[consoleplayer][maketic%BACKUPTICS]; 
+    cmd->consistancy = consistancy[consoleplayer][maketic%BACKUPTICS]; 
  
     strafe = gamekeydown[key_strafe] || mousebuttons[mousebstrafe] 
 	|| joybuttons[joybstrafe]; 
@@ -368,7 +365,7 @@ void G_BuildTiccmd (ticcmd_t* cmd, int maketic)
 	if (gamekeydown[key_right]) 
 	{
 	    // fprintf(stderr, "strafe right\n");
-	    side += sidemove[speed]; 
+	    side += sidemove[speed];
 	}
 	if (gamekeydown[key_left]) 
 	{
@@ -921,33 +918,33 @@ void G_Ticker (void)
 	    if (demorecording) 
 		G_WriteDemoTiccmd (cmd);
 	    
-	    // check for turbo cheats
+	  // check for turbo cheats
 
-            // check ~ 4 seconds whether to display the turbo message. 
-            // store if the turbo threshold was exceeded in any tics
-            // over the past 4 seconds.  offset the checking period
-            // for each player so messages are not displayed at the
-            // same time.
+    // check ~ 4 seconds whether to display the turbo message. 
+    // store if the turbo threshold was exceeded in any tics
+    // over the past 4 seconds.  offset the checking period
+    // for each player so messages are not displayed at the
+    // same time.
 
-            if (cmd->forwardmove > TURBOTHRESHOLD)
-            {
-                turbodetected[i] = true;
-            }
+    if (cmd->forwardmove > TURBOTHRESHOLD)
+    {
+        turbodetected[i] = true;
+    }
 
-            if ((gametic & 31) == 0 
-             && ((gametic >> 5) % MAXPLAYERS) == i
-             && turbodetected[i])
-            {
-                static char turbomessage[80];
-                extern char *player_names[4];
-                M_snprintf(turbomessage, sizeof(turbomessage),
-                           "%s is turbo!", player_names[i]);
-                players[consoleplayer].message = turbomessage;
-                turbodetected[i] = false;
-            }
+    if ((gametic & 31) == 0 
+      && ((gametic >> 5) % MAXPLAYERS) == i
+      && turbodetected[i])
+    {
+        static char turbomessage[80];
+        extern char *player_names[4];
+        M_snprintf(turbomessage, sizeof(turbomessage),
+                    "%s is turbo!", player_names[i]);
+        players[consoleplayer].message = turbomessage;
+        turbodetected[i] = false;
+    }
 
-	    if (netgame && !netdemo && !(gametic%ticdup) ) 
-	    { 
+	  if (netgame && !netdemo && !(gametic%ticdup) ) 
+	  { 
 		if (gametic > BACKUPTICS 
 		    && consistancy[i][buf] != cmd->consistancy) 
 		{ 
@@ -1106,14 +1103,6 @@ void G_PlayerReborn (int player)
 	p->maxammo[i] = maxammo[i]; 
 		 
 }
-
-//
-// G_CheckSpot  
-// Returns false if the player cannot be respawned
-// at the given mapthing_t spot  
-// because something is occupying it 
-//
-void P_SpawnPlayer (mapthing_t* mthing); 
  
 boolean
 G_CheckSpot
@@ -1716,7 +1705,7 @@ void G_DoNewGame (void)
     netdemo = false;
     netgame = false;
     deathmatch = false;
-    playeringame[1] = playeringame[2] = playeringame[3] = 0;
+    playeringame[1] = playeringame[2] = playeringame[3] = false;
     respawnparm = false;
     fastparm = false;
     nomonsters = false;

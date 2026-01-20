@@ -665,7 +665,7 @@ void P_RespawnSpecials (void)
 // Most of the player structure stays unchanged
 //  between levels.
 //
-void P_SpawnPlayer (mapthing_t* mthing)
+void P_SpawnPlayer(mapthing_t* mthing)
 {
     player_t*		p;
     fixed_t		x;

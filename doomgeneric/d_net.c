@@ -217,7 +217,6 @@ void D_ConnectNetGame(void)
     net_connect_data_t connect_data;
 
     InitConnectData(&connect_data);
-    netgame = D_InitNetGame(&connect_data);
 
     //!
     // @category net
@@ -227,7 +226,7 @@ void D_ConnectNetGame(void)
     // demos.
     //
 
-    if (M_CheckParm("-solo-net") > 0)
+    if (M_CheckParm("-net") > 0)
     {
         netgame = true;
     }

@@ -152,6 +152,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="am_map.c" />
+    <ClCompile Include="dg_client.c" />
     <ClCompile Include="doomdef.c" />
     <ClCompile Include="doomgeneric.c" />
     <ClCompile Include="doomgeneric_win.c" />
@@ -287,16 +288,8 @@
     <ClInclude Include="m_menu.h" />
     <ClInclude Include="m_misc.h" />
     <ClInclude Include="m_random.h" />
-    <ClInclude Include="net_client.h" />
-    <ClInclude Include="net_dedicated.h" />
+    <ClInclude Include="dg_client.h" />
     <ClInclude Include="net_defs.h" />
-    <ClInclude Include="net_gui.h" />
-    <ClInclude Include="net_io.h" />
-    <ClInclude Include="net_loop.h" />
-    <ClInclude Include="net_packet.h" />
-    <ClInclude Include="net_query.h" />
-    <ClInclude Include="net_sdl.h" />
-    <ClInclude Include="net_server.h" />
     <ClInclude Include="p_inter.h" />
     <ClInclude Include="p_local.h" />
     <ClInclude Include="p_mobj.h" />

@@ -27,123 +27,20 @@
 // Absolute maximum number of "nodes" in the game.  This is different to
 // NET_MAXPLAYERS, as there may be observers that are not participating
 // (eg. left/right monitors)
-
 #define MAXNETNODES 16
 
 // The maximum number of players, multiplayer/networking.
 // This is the maximum supported by the networking code; individual games
 // have their own values for MAXPLAYERS that can be smaller.
-
 #define NET_MAXPLAYERS 8
 
 // Maximum length of a player's name.
-
 #define MAXPLAYERNAME 30
 
 // Networking and tick handling related.
-
 #define BACKUPTICS 128
 
-typedef struct _net_module_s net_module_t;
-typedef struct _net_packet_s net_packet_t;
-typedef struct _net_addr_s net_addr_t;
-typedef struct _net_context_s net_context_t;
-
-struct _net_packet_s
-{
-    byte *data;
-    size_t len;
-    size_t alloced;
-    unsigned int pos;
-};
-
-struct _net_module_s
-{
-    // Initialize this module for use as a client
-
-    boolean (*InitClient)(void);
-
-    // Initialize this module for use as a server
-
-    boolean (*InitServer)(void);
-
-    // Send a packet
-
-    void (*SendPacket)(net_addr_t *addr, net_packet_t *packet);
-
-    // Check for new packets to receive
-    //
-    // Returns true if packet received
-
-    boolean (*RecvPacket)(net_addr_t **addr, net_packet_t **packet);
-
-    // Converts an address to a string
-
-    void (*AddrToString)(net_addr_t *addr, char *buffer, int buffer_len);
-
-    // Free back an address when no longer in use
-
-    void (*FreeAddress)(net_addr_t *addr);
-
-    // Try to resolve a name to an address
-
-    net_addr_t *(*ResolveAddress)(char *addr);
-};
-
-// net_addr_t
-
-struct _net_addr_s
-{
-    net_module_t *module;
-    void *handle;
-};
-
-// magic number sent when connecting to check this is a valid client
-
-#define NET_MAGIC_NUMBER 3436803284U
-
-// header field value indicating that the packet is a reliable packet
-
-#define NET_RELIABLE_PACKET (1 << 15)
-
-// packet types
-
-typedef enum
-{
-    NET_PACKET_TYPE_SYN,
-    NET_PACKET_TYPE_ACK,
-    NET_PACKET_TYPE_REJECTED,
-    NET_PACKET_TYPE_KEEPALIVE,
-    NET_PACKET_TYPE_WAITING_DATA,
-    NET_PACKET_TYPE_GAMESTART,
-    NET_PACKET_TYPE_GAMEDATA,
-    NET_PACKET_TYPE_GAMEDATA_ACK,
-    NET_PACKET_TYPE_DISCONNECT,
-    NET_PACKET_TYPE_DISCONNECT_ACK,
-    NET_PACKET_TYPE_RELIABLE_ACK,
-    NET_PACKET_TYPE_GAMEDATA_RESEND,
-    NET_PACKET_TYPE_CONSOLE_MESSAGE,
-    NET_PACKET_TYPE_QUERY,
-    NET_PACKET_TYPE_QUERY_RESPONSE,
-    NET_PACKET_TYPE_LAUNCH,
-} net_packet_type_t;
-
-typedef enum
-{
-    NET_MASTER_PACKET_TYPE_ADD,
-    NET_MASTER_PACKET_TYPE_ADD_RESPONSE,
-    NET_MASTER_PACKET_TYPE_QUERY,
-    NET_MASTER_PACKET_TYPE_QUERY_RESPONSE,
-    NET_MASTER_PACKET_TYPE_GET_METADATA,
-    NET_MASTER_PACKET_TYPE_GET_METADATA_RESPONSE,
-    NET_MASTER_PACKET_TYPE_SIGN_START,
-    NET_MASTER_PACKET_TYPE_SIGN_START_RESPONSE,
-    NET_MASTER_PACKET_TYPE_SIGN_END,
-    NET_MASTER_PACKET_TYPE_SIGN_END_RESPONSE,
-} net_master_packet_type_t;
-
 // Settings specified when the client connects to the server.
-
 typedef struct
 {
     int gamemode;
@@ -159,7 +56,6 @@ typedef struct
 
 // Game settings sent by client to server when initiating game start,
 // and received from the server by clients when the game starts.
-
 typedef struct
 {
     int ticdup;
@@ -206,7 +102,6 @@ typedef struct
 } net_ticdiff_t;
 
 // Complete set of ticcmds from all players
-
 typedef struct 
 {
     signed int latency;
@@ -229,7 +124,6 @@ typedef struct
 } net_querydata_t;
 
 // Data sent by the server while waiting for the game to start.
-
 typedef struct
 {
     int num_players;
