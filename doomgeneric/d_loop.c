@@ -172,7 +172,7 @@ static boolean BuildNewTic(void)
     loop_interface->BuildTiccmd(&cmd, maketic);
 
 #ifdef FEATURE_MULTIPLAYER
-    DG_CL_SendTiccmd(&cmd, maketic);
+    DG_CL_SendTiccmd(&cmd, maketic, localplayer);
 #endif
     ticdata[maketic % BACKUPTICS].cmds[localplayer] = cmd;
     ticdata[maketic % BACKUPTICS].ingame[localplayer] = true;
@@ -199,11 +199,6 @@ void NetUpdate (void)
     // is all done separately.
     if (singletics)
         return;
-
-#ifdef FEATURE_MULTIPLAYER
-    // Run doomgeneric client
-    // DG_CL_Run();
-#endif
 
     // check time
     nowtime = GetAdjustedTime() / ticdup;

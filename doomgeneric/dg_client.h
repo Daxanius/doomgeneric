@@ -31,7 +31,7 @@ void DG_CL_GetSettings(net_gamesettings_t *_settings);
 
 // Implement this one to send a ticc command to the server
 // using whichever method you prefer
-void DG_CL_SendTiccmd(ticcmd_t* cmd, int maketic);
+void DG_CL_SendTiccmd(ticcmd_t* cmd, int maketic, int player_id);
 
 // The following can be used to control the games multiplayer state
 

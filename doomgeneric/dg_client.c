@@ -15,15 +15,11 @@ void DG_CL_SpawnPlayer(int player_num) {
 	// local console player
 	if (player_num == consoleplayer) return;
 
-	if (playeringame[player_num]) {
-		// Respawn the existing player
-		G_DoReborn(player_num);
-		return;
-	}
-
 	// Spawn a new player
   playeringame[player_num] = true;
-  P_SpawnPlayer(&playerstarts[player_num]);
+	G_InitPlayer(player_num);
+	P_SpawnPlayer(&playerstarts[player_num]);
+	G_DoReborn(player_num);
 }
 
 void DG_CL_RemovePlayer(int player_num) {

@@ -51,6 +51,8 @@ void	G_DoReborn (int playernum);
 // Spawn a player
 void P_SpawnPlayer(mapthing_t* mthing); 
 
+void G_InitPlayer(int player);
+
 // Called by M_Responder.
 void G_SaveGame (int slot, char* description);
 
