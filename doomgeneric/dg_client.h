@@ -38,7 +38,7 @@ void DG_CL_SendTiccmd(ticcmd_t* cmd, int maketic, int player_id);
 // Set the command bundle received from the server
 // Player mask is a list of all connected players
 // If one of the players in the mask is false, that player will be promptly removed from the local session
-void DG_CL_SetCmdBundle(const ticcmd_t *cmds[MAXPLAYERS], const boolean* player_mask[MAXPLAYERS]);
+void DG_CL_SetCmdBundle(const ticcmd_t* cmds, const boolean* player_mask);
 
 // Use these to control players within the current game
 void DG_CL_SetLocalPlayer(int player_num);

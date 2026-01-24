@@ -64,8 +64,9 @@ void TryRunTics (void);
 // Called at start of game loop to initialize timers
 void D_StartGameLoop(void);
 
-// Initialize networking code and connect to server.
+void D_SetLocalPlayer(int p);
 
+// Initialize networking code and connect to server.
 boolean D_InitNetGame(net_connect_data_t *connect_data);
 
 //

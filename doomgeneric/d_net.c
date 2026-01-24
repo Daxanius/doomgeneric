@@ -79,7 +79,7 @@ static void RunTic(ticcmd_t *cmds, boolean *ingame)
     {
         if (!demoplayback && playeringame[i] && !ingame[i])
         {
-            PlayerQuitGame(&players[i]);
+            // PlayerQuitGame(&players[i]);
         }
     }
 
