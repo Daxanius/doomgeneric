@@ -48,20 +48,8 @@ Sound is much harder to implement! If you need sound, take a look at SDL port. I
 Ported platforms include Windows, X11, SDL, emscripten. Just look at (doomgeneric_win.c, doomgeneric_xlib.c, doomgeneric_sdl.c).
 Makefiles provided for each platform.
 
-## emscripten
-You can try it directly here:
-https://ozkl.github.io/doomgeneric/
-
-emscripten port is based on SDL port, so it supports sound and music! For music, timidity backend is used.
-
-## Windows
-![Windows](screenshots/windows.png)
-
-## X11 - Ubuntu
-![Ubuntu](screenshots/ubuntu.png)
-
-## X11 - FreeBSD
-![FreeBSD](screenshots/freebsd.png)
-
-## SDL
-![SDL](screenshots/sdl.png)
+- emscripten
+- Windows
+- X11 - Ubuntu
+- X11 - FreeBSD
+- SDL

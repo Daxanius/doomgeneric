@@ -27,7 +27,7 @@ if(NOT DOOMGENERIC_FRONTEND STREQUAL "NONE" AND DOOMGENERIC_CMAP256)
 endif()
 
 # SOURCES
-set(DG_DIR ${CMAKE_CURRENT_SOURCE_DIR}/doomgeneric)
+set(DG_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src)
 
 set(DG_CORE_SOURCES
     dummy.c am_map.c doomdef.c doomstat.c dstrings.c d_event.c d_items.c d_iwad.c
@@ -76,7 +76,7 @@ if(NOT DOOMGENERIC_FRONTEND STREQUAL "NONE")
         find_package(SDL2 REQUIRED)
         set(DG_FRONTEND_SOURCES doomgeneric_sdl.c)
         set(DG_FRONTEND_LIBS "")
-        
+
         target_link_libraries(doomgeneric PUBLIC SDL2::SDL2)
 
         if(DOOMGENERIC_SDL_SOUND)
