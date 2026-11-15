@@ -1,0 +1,31 @@
+{
+  description = "C SDL3 development environment";
+
+  outputs =
+    { self, nixpkgs }:
+    let
+      system = "x86_64-linux";
+      pkgs = import nixpkgs { inherit system; };
+      llvm = pkgs.llvmPackages_20;
+      stdenv = llvm.stdenv;
+    in
+    {
+      devShells.${system}.default = pkgs.mkShell {
+        packages = with pkgs; [
+          # Build system
+          cmakeCurses
+          ninja
+          pkg-config
+
+          # Compiler tooling
+          clang-tools
+          clang
+          lldb
+          gdb
+
+          SDL2
+          SDL2_mixer
+        ];
+      };
+    };
+}

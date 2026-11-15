@@ -166,6 +166,10 @@ void DG_SleepMs(uint32_t ms)
   SDL_Delay(ms);
 }
 
+short DG_GetMouseDelta() {
+  return 0;
+}
+
 uint32_t DG_GetTicksMs()
 {
   return SDL_GetTicks();

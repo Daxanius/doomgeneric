@@ -4,10 +4,15 @@
 *.DS_Store
 *.log
 *.user
+*.[Ww][Aa][Dd]
 *~
 .vs/
+.direnv
+.cache
+.savegame
 Debug/
 Release/
 Build/
 x64/
 doomgeneric.map
+[Bb]uild/
