@@ -21,6 +21,7 @@
 #include <stdlib.h>
 #include <math.h>
 
+#include "dg_coop.h"
 #include "doomdef.h" 
 #include "doomkeys.h"
 #include "doomstat.h"
@@ -946,7 +947,7 @@ void G_Ticker (void)
                 turbodetected[i] = false;
             }
 
-	    if (netgame && !netdemo && !(gametic%ticdup) ) 
+	    if (netgame && !netdemo && !dg_step_mode && !(gametic%ticdup) ) 
 	    { 
 		if (gametic > BACKUPTICS 
 		    && consistancy[i][buf] != cmd->consistancy) 

@@ -54,6 +54,9 @@ void D_RegisterLoopCallbacks(loop_interface_t *i);
 // Create any new ticcmds and broadcast to other players.
 void NetUpdate (void);
 
+// Run one tic with the given commands, cmds and ingame hold n entries.
+void D_StepTic(const ticcmd_t *cmds, const boolean *ingame, int n);
+
 // Broadcasts special packets to other players
 //  to notify of game exit
 void D_QuitNetGame (void);

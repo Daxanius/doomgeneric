@@ -933,20 +933,19 @@ void ST_Ticker (void)
 
 static int st_palette = 0;
 
-void ST_doPaletteStuff(void)
+// Palette number for a player.
+static int ST_PaletteFor(const player_t *p)
 {
-
     int		palette;
-    byte*	pal;
     int		cnt;
     int		bzc;
 
-    cnt = plyr->damagecount;
+    cnt = p->damagecount;
 
-    if (plyr->powers[pw_strength])
+    if (p->powers[pw_strength])
     {
 	// slowly fade the berzerk out
-  	bzc = 12 - (plyr->powers[pw_strength]>>6);
+  	bzc = 12 - (p->powers[pw_strength]>>6);
 
 	if (bzc > cnt)
 	    cnt = bzc;
@@ -962,9 +961,9 @@ void ST_doPaletteStuff(void)
 	palette += STARTREDPALS;
     }
 
-    else if (plyr->bonuscount)
+    else if (p->bonuscount)
     {
-	palette = (plyr->bonuscount+7)>>3;
+	palette = (p->bonuscount+7)>>3;
 
 	if (palette >= NUMBONUSPALS)
 	    palette = NUMBONUSPALS-1;
@@ -972,8 +971,8 @@ void ST_doPaletteStuff(void)
 	palette += STARTBONUSPALS;
     }
 
-    else if ( plyr->powers[pw_ironfeet] > 4*32
-	      || plyr->powers[pw_ironfeet]&8)
+    else if ( p->powers[pw_ironfeet] > 4*32
+	      || p->powers[pw_ironfeet]&8)
 	palette = RADIATIONPAL;
     else
 	palette = 0;
@@ -988,6 +987,24 @@ void ST_doPaletteStuff(void)
     {
         palette = RADIATIONPAL;
     }
+
+    return palette;
+}
+
+// Select the palette that the given player would currently see
+void ST_SetPaletteFor(struct player_s *p)
+{
+    int palette = ST_PaletteFor(p);
+    byte *pal = (byte *) W_CacheLumpNum (lu_palette, PU_CACHE)+palette*768;
+
+    st_palette = palette;
+    I_SetPalette (pal);
+}
+
+void ST_doPaletteStuff(void)
+{
+    int palette = ST_PaletteFor(plyr);
+    byte *pal;
 
     if (palette != st_palette)
     {

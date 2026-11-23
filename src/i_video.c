@@ -318,7 +318,9 @@ void I_UpdateNoBlit (void)
 // I_FinishUpdate
 //
 
-void I_FinishUpdate (void)
+// Draws buffer into dst, scaled and centred
+// for the configured framebuffer size
+void I_BlitFrame (void *dst)
 {
     int y;
     int x_offset, y_offset, x_offset_end;
@@ -335,7 +337,7 @@ void I_FinishUpdate (void)
 
     /* DRAW SCREEN */
     line_in  = (unsigned char *) I_VideoBuffer;
-    line_out = (unsigned char *) DG_ScreenBuffer;
+    line_out = (unsigned char *) dst;
 
     y = SCREENHEIGHT;
 
@@ -365,6 +367,11 @@ void I_FinishUpdate (void)
         }
         line_in += SCREENWIDTH;
     }
+}
+
+void I_FinishUpdate (void)
+{
+    I_BlitFrame(DG_ScreenBuffer);
 
 	DG_DrawFrame();
 }

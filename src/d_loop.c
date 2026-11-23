@@ -23,6 +23,7 @@
 
 #include "d_event.h"
 #include "d_loop.h"
+#include "dg_coop.h"
 #include "d_ticcmd.h"
 
 #include "i_system.h"
@@ -205,6 +206,10 @@ void NetUpdate (void)
     int nowtime;
     int newtics;
     int	i;
+
+    // In step mode the host supplies every ticcmd; never sample local input
+    if (dg_step_mode)
+        return;
 
     // If we are running with singletics (timing a demo), this
     // is all done separately.
@@ -443,6 +448,27 @@ void D_StartNetGame(net_gamesettings_t *settings,
 	settings->new_sync = 0;
 	settings->extratics = 1;
 	settings->ticdup = 1;
+
+	{
+		const dg_coop_config_t *dg = dg_coop_get_config();
+
+		if (dg != NULL)
+		{
+			settings->num_players = dg->num_players;
+			settings->deathmatch = dg->deathmatch;
+			settings->nomonsters = dg->nomonsters;
+			settings->respawn_monsters = dg->respawn_monsters;
+			settings->fast_monsters = dg->fast_monsters;
+			settings->timelimit = dg->timelimit;
+
+			if (dg->episode > 0)
+				settings->episode = dg->episode;
+			if (dg->map > 0)
+				settings->map = dg->map;
+			if (dg->skill > 0)
+				settings->skill = dg->skill - 1;
+		}
+	}
 
 	ticdup = settings->ticdup;
 	new_sync = settings->new_sync;
@@ -818,6 +844,29 @@ void TryRunTics (void)
 
 	NetUpdate ();	// check for new console commands
     }
+}
+
+// Run one game tic with the given commands, without touching the
+// clock, the menu, the keyboard or the network.
+void D_StepTic(const ticcmd_t *cmds, const boolean *ingame, int n)
+{
+    ticcmd_set_t set;
+    int i;
+
+    memset(&set, 0, sizeof(set));
+
+    for (i = 0; i < n && i < NET_MAXPLAYERS; ++i)
+    {
+        set.cmds[i] = cmds[i];
+        set.ingame[i] = ingame[i];
+    }
+
+    memcpy(local_playeringame, set.ingame, sizeof(local_playeringame));
+
+    loop_interface->RunTic(set.cmds, set.ingame);
+
+    gametic++;
+    maketic++;
 }
 
 void D_RegisterLoopCallbacks(loop_interface_t *i)

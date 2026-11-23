@@ -138,6 +138,9 @@ void I_EnableLoadingDisk(void);
 
 void I_EndRead (void);
 
+// Draw the current frame into dst without presenting it.
+void I_BlitFrame (void *dst);
+
 struct color {
     uint32_t b:8;
     uint32_t g:8;

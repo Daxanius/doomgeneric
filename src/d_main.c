@@ -73,6 +73,7 @@
 #include "statdump.h"
 
 #include "d_main.h"
+#include "dg_coop.h"
 
 //
 // D-DoomLoop()
@@ -437,7 +438,10 @@ void D_DoomLoop (void)
 
     main_loop_started = true;
 
-    TryRunTics();
+    // In step mode the host runs every tic.
+    // tic here would run with only the local player in the game.
+    if (!dg_step_mode)
+        TryRunTics();
 
     I_SetWindowTitle(gamedescription);
     I_GraphicsCheckCommandLine();
@@ -446,6 +450,16 @@ void D_DoomLoop (void)
     I_EnableLoadingDisk();
 
     V_RestoreBuffer();
+
+    if (dg_step_mode)
+    {
+        // Fullscreen view
+        extern int screenblocks;
+        extern int detailLevel;
+        screenblocks = 11;
+        R_SetViewSize(screenblocks, detailLevel);
+    }
+
     R_ExecuteSetViewSize();
 
     D_StartGameLoop();
@@ -453,6 +467,12 @@ void D_DoomLoop (void)
     if (testcontrols)
     {
         wipegamestate = gamestate;
+    }
+
+    if (dg_step_mode)
+    {
+        dg_coop_begin();
+        return;
     }
 
     doomgeneric_Tick();

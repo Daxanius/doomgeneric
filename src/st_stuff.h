@@ -48,6 +48,10 @@ void ST_Drawer (boolean fullscreen, boolean refresh);
 // Called when the console player is spawned on each level.
 void ST_Start (void);
 
+// Switch the palette to the tint the given player currently sees
+struct player_s;
+void ST_SetPaletteFor (struct player_s *p);
+
 // Called by startup code.
 void ST_Init (void);
 

@@ -37,6 +37,7 @@
 #include "deh_main.h"
 
 #include "d_loop.h"
+#include "dg_coop.h"
 
 ticcmd_t *netcmds;
 
@@ -219,6 +220,12 @@ void D_ConnectNetGame(void)
     InitConnectData(&connect_data);
     netgame = D_InitNetGame(&connect_data);
 
+    // Local co-op with several players is a net game as far as the game is concerned
+    if (dg_coop_active() && dg_coop_get_config()->num_players > 1)
+    {
+        netgame = true;
+    }
+
     //!
     // @category net
     //
@@ -241,7 +248,8 @@ void D_CheckNetGame (void)
 {
     net_gamesettings_t settings;
 
-    if (netgame)
+    // Step mode never shows the title screen / demo loop, even with a single player.
+    if (netgame || dg_coop_active())
     {
         autostart = true;
     }
